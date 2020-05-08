@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>新規会員登録</title>
+    <link rel="stylesheet" href="style2.css" />
+    <link
+      href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <nav id="breadCrumb">
+      <ul class="clearfix">
+        <li><a href="home.html">ラクダ商店</a></li>
+        <li>ログイン</li>
+      </ul>
+      <p class="backColor"></p>
+      <h1>ログイン🐪</h1>
+    </nav>
+
+    <article id="registInfo">
+      <p class="notion">
+        以下の<span class="kome">※</span>は必須項目となりますので入力ください
+      </p>
+      <form
+        action="home.html"
+        method="get"
+        class="cstInfoForm"
+        name="cstInfoForm"
+        onreset="return confirm('内容をリセットしても宜しいですか？')"
+      >
+        <div class="cstInfoHeader">
+          ＜会員情報＞
+          <div class="cstInfo">
+            <div class="cstName">
+              <span class="kome">※</span
+              ><input
+                type="text"
+                name="cstName"
+                class="nameInfo"
+                placeholder="氏名"
+                maxlength="20"
+              />
+            </div>
+            <div class="cstId">
+              <input
+                type="tel"
+                name="cstId"
+                class="idInfo"
+                maxlength="6"
+                placeholder="ユーザID"
+              />
+            </div>
+            <div class="cstPass">
+              <span class="kome2">※</span
+              ><input
+                type="password"
+                name="cstPass"
+                maxlength="8"
+                class="passInfo"
+                placeholder="パスワード"
+              /><span class="togglePass"
+                ><i class="fas fa-eye toggle-password"></i
+              ></span>
+            </div>
+          </div>
+          <div>
+            <div class="cstInfo">＜会員区分＞</div>
+            <div class="kubun">
+              <div>
+                <input
+                  type="radio"
+                  name="kubun_Radio"
+                  class="kubunRadio"
+                  value="ゴールド会員"
+                />ゴールド会員
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="kubun_Radio"
+                  class="kubunRadio"
+                  value="シルバー会員"
+                />シルバー会員
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="kubun_Radio"
+                  class="kubunRadio"
+                  value="一般会員"
+                  checked
+                />一般会員
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cstInfoFooter">
+          <button type="button" id="login" name="cstInfoButton">
+            ログイン
+          </button>
+          <button type="reset" id="resetInfo" name="cstInfoReset">
+            リセット
+          </button>
+          <p>
+            ※会員登録をしていない方は <a href="member_regist.html"><b>こちら</b></a
+            > から会員登録するようお願いいたします。
+          </p>
+        </div>
+    </article>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <div class="modal-wrapper" id="modal">
+      <div class="modal-confirm">
+        <p>こちらの内容で登録しますが、宜しいですか？</p>
+        <div>
+          名前　　　：<span class="name"></span><br />
+          ユーザID　：<span class="userId"></span><br />
+          パスワード：<span class="pass"></span><br />
+          会員区分　：<span class="mnbKubun"></span><br />
+        </div>
+        <button type="submit" id="regist-sub" name="mnbRegistSub" value="go">
+          新規登録
+        </button>
+        <button type="button" id="return" name="return" value="noGo">
+          戻る
+        </button>
+      </div>
+    </div>
+  </form>
+    <script>
+      $(function () {
+        $("#login").click(function () {
+          var text = $(".nameInfo").val();
+          var id = $(".idInfo").val();
+          var pass = $(".passInfo").val();
+          var kubun;
+          $('input[name="kubun_Radio"]:checked').each(function () {
+            kubun = $(this).val();
+          });
+          console.log(kubun);
+          if (!text || !pass) {
+            alert("必須項目を入力ください");
+          }else if( $(".passInfo").val().length < 6){
+            alert("パスワードは６文字以上８文字以下で入力ください");
+          } else {
+            $(".name").text(text);
+            $(".userId").text(id);
+            $(".pass").text(pass);
+            $(".mnbKubun").text(kubun);
+            $("#modal").fadeIn();
+          }
+        });
+      });
+
+      $(function () {
+        $("#regist-sub").click(function () {
+          return true;
+        });
+      });
+
+      $(function () {
+        $("#return").click(function () {
+          $("#modal").fadeOut();
+        });
+      });
+    </script>
+    <script>
+      $(".toggle-password").click(function () {
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        let input = $(this).parent().prev("input");
+        if (input.attr("type") == "password") {
+          input.attr("type", "text");
+        } else {
+          input.attr("type", "password");
+        }
+      });
+    </script>
+  </body>
+</html>
